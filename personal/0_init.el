@@ -24,6 +24,22 @@
 ;;; Path
 (add-to-list 'load-path (expand-file-name (concat "~/.emacs.d" "/psgml/")) t)
 
+;;; Start Emacs Server
+(cond ((eq system-type 'cygwin)         ; Under cygwin
+       (server-start))
+      ((eq system-type 'windows-nt)     ; Under Windows NT
+       (cond ((fboundp 'emacsw32-version) ; Under EmacsW32
+              (server-start))
+                                        ;(ignore))
+             (t (require 'gnuserv)      ;   Default
+                (gnuserv-start))))
+      ((eq system-type 'berkeley-unix)  ; Under FreeBSD
+       (server-start))
+      ((eq system-type 'darwin)
+       (server-start)))
+(add-hook 'server-visit-hook (function (lambda () (raise-frame))))
+(add-hook 'server-done-hook (function (lambda () (lower-frame))))
+
 ;;; Package management
 ;; (require 'package)
 
