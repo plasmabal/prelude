@@ -26,6 +26,19 @@
 (color-theme-initialize)
 (color-theme-charcoal-black)
 
+;; hi-lock mode
+(if (functionp 'global-hi-lock-mode)
+    (global-hi-lock-mode 1)
+  (hi-lock-mode 1))
+(defun highlight-common-phrases ()
+  "Highlight common phrases.  Used in mode hooks."
+  (highlight-phrase "XXXX" 'hi-yellow)
+  (highlight-phrase "TODO" 'hi-yellow)
+  (highlight-phrase "FIXME" 'hi-yellow)
+  (highlight-phrase "DEBUG" 'hi-pink)
+  (highlight-regexp "NOTES?" 'hi-yellow)
+  )
+
 ;; Ibuffer
 (setq ibuffer-saved-filter-groups
       (quote (("default"
@@ -58,6 +71,10 @@
 (add-hook 'ibuffer-mode-hook
           (lambda ()
             (ibuffer-switch-to-saved-filter-groups "default")))
+
+;; uniquify mode
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
 ;; w3m mode
 (autoload 'w3m "w3m" "Interface for w3m on Emacs." t)

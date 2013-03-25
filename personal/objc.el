@@ -36,6 +36,7 @@
      ))))
 (add-hook 'objc-mode-hook
           (lambda ()
+            (highlight-common-phrases)
             (define-key objc-mode-map (kbd "C-c C-r") 'xcode:buildandrun)
             ))
 
